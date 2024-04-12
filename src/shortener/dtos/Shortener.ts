@@ -1,13 +1,24 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class Shortener {
     @IsNumber()
     id: number;
 
-    @IsEmail()
-    email: string;
+    @IsString()
+    originalUrl: string;
 
-    @IsNotEmpty()
-    password: string;
+    @IsString()
+    shortenedUrl: string;
 
+    @IsNumber()
+    userId?: number;
+
+    @IsNumber()
+    clicks: number;
+
+    @IsDate()
+    createdAt: Date;
+
+    @IsDate()
+    updatedAt: Date;
 }

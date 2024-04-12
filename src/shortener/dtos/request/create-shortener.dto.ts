@@ -12,7 +12,7 @@ export class CreateShortenerDTO {
 
   @ApiProperty()
   @IsNumber()
-  userId: number;
+  userId?: number;
 
   @ApiProperty()
   @IsNumber()

@@ -3,8 +3,9 @@ import { ViewShortenerDTO } from '../dtos/responses/view-shortener.dto';
 
 export class ShortenerBuilder {
   static createViewShortener(shortener: Shortener): ViewShortenerDTO {
-    const { id, email } = shortener;
+    const { id, originalUrl, shortenedUrl, userId, clicks, createdAt, updatedAt } = shortener;
 
-    return { id, email };
+    return { id, originalUrl, shortenedUrl, userId, clicks, createdAt, updatedAt };
   }
 }
+

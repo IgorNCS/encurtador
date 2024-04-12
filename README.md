@@ -75,3 +75,6 @@ Nest is [MIT licensed](LICENSE).
 abra o docker
 docker-compose build
 docker-compose up"# encurtador" 
+
+
+>docker-compose up -d --build
