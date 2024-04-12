@@ -31,7 +31,7 @@ export class ShortenerService {
     }
 
 
-    async updateOriginalUrl(shortenedUpdate: UpdateShortenerDTO): Promise<ViewShortenerDTO> {
+    async updateOriginalUrl(id:number ,shortenedUpdate: UpdateShortenerDTO): Promise<ViewShortenerDTO> {
 
         const shortener = await this.findShortenerById(shortenedUpdate.id);
         await this.isShortenerOwner(shortener.id,shortenedUpdate.id);

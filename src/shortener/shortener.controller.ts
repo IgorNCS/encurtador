@@ -1,8 +1,9 @@
-import { Body, Controller, HttpStatus, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
 import { ShortenerService } from './shortener.service';
 import { Request, Response } from 'express';
 import { CreateShortenerDTO } from './dtos/request/create-shortener.dto';
 import { AuthGuard } from 'src/user/guards/auth.guard';
+import { UpdateShortenerDTO } from './dtos/request/update-shortener.dto';
 
 @Controller('shortener')
 export class ShortenerController {
@@ -15,6 +16,17 @@ export class ShortenerController {
         return res
             .status(HttpStatus.CREATED)
             .json({ data: user, status: HttpStatus.CREATED });
+    }
+
+    @UseGuards(AuthGuard)
+    @Put(':id/update')
+    async update(@Param('id') id: number, @Body() shortenedUpdate: UpdateShortenerDTO, @Res() res: Response) {
+        try {
+            const updatedShortener = await this.shortenerService.updateOriginalUrl(id, shortenedUpdate);
+            return res.status(HttpStatus.OK).json({ data: updatedShortener, status: HttpStatus.OK });
+        } catch (error) {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Failed to update shortener' });
+        }
     }
 
     
