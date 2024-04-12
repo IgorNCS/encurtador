@@ -1,38 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsNumber } from 'class-validator';
 
 export class RegisterShortenerDTO {
   @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   originalUrl: string;
 
   @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   shortenedUrl: string;
 
   @ApiProperty()
+  @IsOptional() // Tornando userId opcional
   @IsNumber()
-  userId: number;
-
-  @ApiProperty()
-  @IsNumber()
-  clicks: number;
+  userId?: number;
 }
-
-// model ShortenedUrl {
-//     id            Int       @id @default(autoincrement())
-//     originalUrl   String
-//     shortenedUrl  String    @unique
-//     userId        Int       
-//     clicks        Int       @default(0)
-//     createdAt     DateTime  @default(now())
-//     updatedAt     DateTime  @updatedAt
-  
-//     user          User      @relation(fields: [userId], references: [id])
-//   }
-
-/*
-VERIFICAR SE O USERID É VALIDO
-VERIFICAR SE JÁ EXISTE O SHORTENEDURL
-
-*/

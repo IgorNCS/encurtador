@@ -39,7 +39,6 @@ export class UserService {
         }
 
         const payload: ViewUserDTO = UserBuilder.createViewUser(user);
-
         const token = this.jwtService.sign(payload);
 
         return { payload, token };
@@ -89,5 +88,5 @@ export class UserService {
         return await compare(pwd, hash);
     }
 
-    
+
 }

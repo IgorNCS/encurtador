@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Req, Res, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import { CreateUserDTO } from './dtos/request/create-user.dto';
@@ -18,8 +18,9 @@ export class UserController {
       .json({ data: user, status: HttpStatus.CREATED });
   }
 
-  
+
   @Post('login')
+  @UsePipes(ValidationPipe)
   async login(@Body() payload: PayloadLoginDTO, @Req() req: Request, @Res() res: Response) {
     const data = await this.userService.login(payload);
     req['user'] = data.payload;

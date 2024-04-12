@@ -4,10 +4,14 @@ import { AppService } from './app.service';
 import { HelloController } from './hello/hello.controller';
 import { UserModule } from './user/user.module';
 import { ShortenerModule } from './shortener/shortener.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UserModule, ShortenerModule],
+  imports: [ConfigModule.forRoot({
+    isGlobal: true,
+    envFilePath: './.env',
+  }), UserModule, ShortenerModule],
   controllers: [AppController, HelloController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
