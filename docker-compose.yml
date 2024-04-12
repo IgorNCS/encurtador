@@ -1,34 +1,26 @@
 version: '3'
 services:
-  mysql:
-    image: mysql:latest
+  postgres:
+    image: postgres:latest
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: database_name
-      MYSQL_USER: username
-      MYSQL_PASSWORD: password
+      POSTGRES_DB: encurtador
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
     volumes:
-      - mysql-data:/var/lib/mysql
+      - postgres-data:/var/lib/postgresql/data
 
-  app:
-    build: .
-    ports:
-      - "3000:3000"
-    depends_on:
-      - mysql
-    environment:
-      DATABASE_URL: mysql://username:password@mysql:3306/database_name
-    # Altere o comando de inicialização para usar o Nodemon
-    command: ["npm", "run", "start:dev"]
-
-  nodemon:
-    image: node:20.12.2  # Use a mesma versão do Node.js do seu Dockerfile
-    volumes:
-      - ./path/to/your/app:/app  # Montando o diretório do seu aplicativo dentro do contêiner
-    command: ["npm", "run", "start:dev"]  # Executando o Nodemon
-    restart: always  # Garantindo que o serviço seja reiniciado sempre que necessário
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     DATABASE_URL: postgres://username:password@postgres:5432/encurtador
 
 volumes:
-  mysql-data:
+  postgres-data:

@@ -7,10 +7,11 @@ export class CreateUserDTO {
   email: string;
 
   @ApiProperty()
-  @IsString({ message: 'Value must be a string' })
-  username: string;
+  @IsNotEmpty()
+  password: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  password: string;
+  repeatPassword: string;
+
 }
