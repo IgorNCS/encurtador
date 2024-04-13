@@ -20,7 +20,7 @@ export class ShortenerController {
     }
 
     @UseGuards(AuthGuard)
-    @Put(':id/update')
+    @Put('update/:id')
     async update(@Param('id') id: number, @Body() shortenedUpdate: UpdateShortenerDTO, @Res() res: Response, @Req() req: Request) {
         try {
             const updatedShortener = await this.shortenerService.updateOriginalUrl(id, shortenedUpdate, req);
@@ -32,7 +32,7 @@ export class ShortenerController {
     }
 
     @UseGuards(AuthGuard)
-    @Put(':id/delete')
+    @Put('delete/:id')
     async delete(@Param('id') id: number, @Res() res: Response, @Req() req: Request) {
         try {
             await this.shortenerService.deleteShortener(id, req);
