@@ -78,3 +78,4 @@ docker-compose up"# encurtador"
 
 
 >docker-compose up -d --build
+postgresql-x64-15 -pode ter q parar

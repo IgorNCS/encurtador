@@ -30,5 +30,6 @@ model ShortenedUrl {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
+  onlyAuthenticated Boolean @default(false)
   user          User?    @relation(fields: [userId], references: [id])
 }
