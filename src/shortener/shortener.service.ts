@@ -16,7 +16,9 @@ export class ShortenerService {
         let userId = req?.user?.id || undefined;
 
         const uniqueShortenedUrl = await this.generateUniqueShortenedUrl();
-        const shortenerCreateDTO = { ...shortenerDTO, userId: userId, shortenedUrl: uniqueShortenedUrl };
+        const formattedUrl = await this.formatterUrl(shortenerDTO.originalUrl)
+
+        const shortenerCreateDTO = { originalUrl: formattedUrl, userId: userId, shortenedUrl: uniqueShortenedUrl };
 
         const createdShortener = await this.shortenerRepository.create(shortenerCreateDTO);
 
@@ -103,6 +105,16 @@ export class ShortenerService {
         }
 
         return shortenedUrl;
+    }
+
+
+    async formatterUrl(url: string): Promise<string> {
+
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            return 'https://' + url;
+        }
+
+        return url;
     }
 
 
