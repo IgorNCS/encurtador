@@ -18,7 +18,7 @@ export class ShortenerRepository {
     return await this.prisma.shortenedUrl.update({
       where: { id: id },
       data: {
-        originalUrl: shortener.originalUrl,
+        originalUrl: shortener.newOriginalUrl,
         updatedAt: new Date(),
       },
     });
