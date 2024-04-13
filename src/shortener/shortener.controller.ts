@@ -10,17 +10,6 @@ import { AuthVerifyHeaderGuard } from 'src/user/guards/AuthVerifyHeader.Guard';
 export class ShortenerController {
     constructor(private shortenerService: ShortenerService) { }
 
-    // @UseGuards(VerifyHeaderGuard, AuthGuard)
-    // @Post('register')
-    // async register(@Body() shortenerDTO: CreateShortenerDTO, @Res() res: Response, @Req() req: Request) {
-    //     console.log(req)
-    //     console.log("ae")
-    //     const user = await this.shortenerService.register(shortenerDTO);
-    //     return res
-    //         .status(HttpStatus.CREATED)
-    //         .json({ data: user, status: HttpStatus.CREATED });
-    // }
-
     @UseGuards(AuthVerifyHeaderGuard)
     @Post('register')
     async register(@Body() shortenerDTO: CreateShortenerDTO, @Res() res: Response, @Req() req: Request) {
