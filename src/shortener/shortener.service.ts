@@ -40,7 +40,7 @@ export class ShortenerService {
     async deleteShortener(id: number, req) {
         const userId = req.user.id
         const shortener = await this.findShortenerById(id);
-        await this.isShortenerOwner(shortener.id, userId);
+        await this.isShortenerOwner(shortener.userId, userId);
 
         await this.shortenerRepository.updateDeleteShortener(id)
 
@@ -59,11 +59,6 @@ export class ShortenerService {
         const viewShorteners: ViewShortenerDTO[] = shorteners.map(shortener => ShortenerBuilder.createViewShortener(shortener));
         return viewShorteners;
     }
-
-
-
-
-
 
 
     async findShortenerById(id) {

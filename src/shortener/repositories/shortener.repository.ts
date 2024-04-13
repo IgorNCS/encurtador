@@ -50,7 +50,7 @@ export class ShortenerRepository {
   }
 
   async findAll(): Promise<Shortener[]> {
-    const shorteners = await this.prisma.shortenedUrl.findMany();
+    const shorteners = await this.prisma.shortenedUrl.findMany({ where: { deletedAt: null } });
     return shorteners;
   }
 
