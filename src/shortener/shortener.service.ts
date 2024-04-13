@@ -28,7 +28,7 @@ export class ShortenerService {
     async updateOriginalUrl(id: number, shortenedUpdate: UpdateShortenerDTO, req): Promise<ViewShortenerDTO> {
         const userId = req.user.id
         const shortener = await this.findShortenerById(id);
-        console.log(shortener)
+
         await this.isShortenerOwner(shortener.userId, userId);
 
         const updatedShortener = await this.shortenerRepository.updateOriginalUrl(id, shortenedUpdate);
@@ -40,8 +40,8 @@ export class ShortenerService {
     async deleteShortener(id: number, req) {
         const userId = req.user.id
         const shortener = await this.findShortenerById(id);
-        await this.isShortenerOwner(shortener.userId, userId);
 
+        await this.isShortenerOwner(shortener.userId, userId);
         await this.shortenerRepository.updateDeleteShortener(id)
 
         return 'Shortener deleted successfully.';
@@ -91,12 +91,12 @@ export class ShortenerService {
     async generateUniqueShortenedUrl(): Promise<string> {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let shortenedUrl = '';
+
         for (let i = 0; i < Math.ceil(Math.random() * 6); i++) {
             shortenedUrl += characters.charAt(Math.floor(Math.random() * characters.length));
         }
 
         const existingShortenedUrl = await this.findByShortenedUrl(shortenedUrl);
-
 
         if (existingShortenedUrl) {
             return this.generateUniqueShortenedUrl();
