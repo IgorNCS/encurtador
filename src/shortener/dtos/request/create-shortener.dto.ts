@@ -6,9 +6,4 @@ export class CreateShortenerDTO {
   @IsString()
   originalUrl: string;
 
-  @ApiProperty()
-  @IsNumber()
-  @IsOptional()
-  userId?: number;
-
 }
