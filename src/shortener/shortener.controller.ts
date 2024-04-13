@@ -26,7 +26,7 @@ export class ShortenerController {
             const updatedShortener = await this.shortenerService.updateOriginalUrl(id, shortenedUpdate, req);
             return res.status(HttpStatus.OK).json({ data: updatedShortener, status: HttpStatus.OK });
         } catch (error) {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Failed to update shortener' });
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Failed to update shortener',error:error });
 
         }
     }

@@ -28,7 +28,8 @@ export class ShortenerService {
     async updateOriginalUrl(id: number, shortenedUpdate: UpdateShortenerDTO, req): Promise<ViewShortenerDTO> {
         const userId = req.user.id
         const shortener = await this.findShortenerById(id);
-        await this.isShortenerOwner(shortener.id, userId);
+        console.log(shortener)
+        await this.isShortenerOwner(shortener.userId, userId);
 
         const updatedShortener = await this.shortenerRepository.updateOriginalUrl(id, shortenedUpdate);
         const viewUpdatedShortener: ViewShortenerDTO = ShortenerBuilder.createViewShortener(updatedShortener);
@@ -74,7 +75,7 @@ export class ShortenerService {
 
     async isShortenerOwner(shortenerId, id) {
         if (shortenerId !== id) {
-            throw new UnauthorizedException('Invalid credentials');
+            throw new UnauthorizedException('Invalid Owner credentials');
         }
 
     }
