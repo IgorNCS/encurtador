@@ -9,9 +9,9 @@ import { UpdateShortenerDTO } from './dtos/request/update-shortener.dto';
 export class ShortenerController {
     constructor(private shortenerService: ShortenerService) { }
 
-
     @Post('register')
-    async register(@Body() shortenerDTO: CreateShortenerDTO, @Res() res: Response) {
+    async register(@Body() shortenerDTO: CreateShortenerDTO, @Res() res: Response, @Req() req: Request) {
+        
         const user = await this.shortenerService.register(shortenerDTO);
         return res
             .status(HttpStatus.CREATED)

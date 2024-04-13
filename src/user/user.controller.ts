@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { CreateUserDTO } from './dtos/request/create-user.dto';
 import { PayloadLoginDTO } from './dtos/request/login-user.dto';
 import { RegisterGuard } from './guards/register.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -30,6 +31,12 @@ export class UserController {
   @Get('get')
   teste(){
     return 'oi'
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('logout')
+  async logout(@Res() res: Response) {
+    return res.clearCookie('access_token').status(HttpStatus.OK).json({ access_token: null, status: HttpStatus.OK });
   }
   
   
