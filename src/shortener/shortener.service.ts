@@ -33,6 +33,8 @@ export class ShortenerService {
 
         await this.isShortenerOwner(shortener.userId, userId);
 
+        shortenedUpdate.newOriginalUrl = await this.formatterUrl(shortenedUpdate.newOriginalUrl)
+
         const updatedShortener = await this.shortenerRepository.updateOriginalUrl(id, shortenedUpdate);
         const viewUpdatedShortener: ViewShortenerDTO = ShortenerBuilder.createViewShortener(updatedShortener);
 
