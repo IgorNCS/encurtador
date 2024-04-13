@@ -12,8 +12,8 @@ import { Shortener } from './dtos/Shortener';
 export class ShortenerService {
     constructor(private shortenerRepository: ShortenerRepository, private jwtService: JwtService, private userService: UserService) { }
 
-    async register(shortenerDTO: CreateShortenerDTO,req): Promise<ViewShortenerDTO> {
-        let userId = req?.user?.id||undefined;
+    async register(shortenerDTO: CreateShortenerDTO, req): Promise<ViewShortenerDTO> {
+        let userId = req?.user?.id || undefined;
 
         const uniqueShortenedUrl = await this.generateUniqueShortenedUrl();
         const shortenerCreateDTO = { ...shortenerDTO, userId: userId, shortenedUrl: uniqueShortenedUrl };
@@ -53,6 +53,13 @@ export class ShortenerService {
         const viewShorteners: ViewShortenerDTO[] = shorteners.map(shortener => ShortenerBuilder.createViewShortener(shortener));
         return viewShorteners;
     }
+
+    async findAll(): Promise<ViewShortenerDTO[]> {
+        const shorteners = await this.shortenerRepository.findAll();
+        const viewShorteners: ViewShortenerDTO[] = shorteners.map(shortener => ShortenerBuilder.createViewShortener(shortener));
+        return viewShorteners;
+    }
+
 
 
 

@@ -54,6 +54,16 @@ export class ShortenerController {
         }
     }
 
+    @Get('findAll')
+    async findAll(@Res() res: Response) {
+        try {
+            const shorteners = await this.shortenerService.findAll();
+            return res.status(HttpStatus.OK).json({ data: shorteners, status: HttpStatus.OK });
+        } catch (error) {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Failed to fetch shorteners', error: error });
+        }
+    }
+
 
 
 

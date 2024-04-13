@@ -33,13 +33,13 @@ export class ShortenerRepository {
     });
   }
 
-  
+
   async findAllByUserId(userId: number): Promise<Shortener[]> {
     const shorteners = await this.prisma.shortenedUrl.findMany({ where: { userId: userId } });
     return shorteners;
-}
+  }
 
-  async findById(id: number) {
+  async findById(id: number): Promise<Shortener> {
     const shortener = await this.prisma.shortenedUrl.findFirst({ where: { id: id } });
     return shortener;
   }
@@ -47,6 +47,11 @@ export class ShortenerRepository {
   async findByShortenedUrl(shortenedUrl: string) {
     const shortener = await this.prisma.shortenedUrl.findFirst({ where: { shortenedUrl: shortenedUrl } });
     return shortener;
+  }
+
+  async findAll(): Promise<Shortener[]> {
+    const shorteners = await this.prisma.shortenedUrl.findMany();
+    return shorteners;
   }
 
 
