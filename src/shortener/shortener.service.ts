@@ -12,20 +12,16 @@ import { Shortener } from './dtos/Shortener';
 export class ShortenerService {
     constructor(private shortenerRepository: ShortenerRepository, private jwtService: JwtService, private userService: UserService) { }
 
-    async register(shortenerDTO: CreateShortenerDTO): Promise<ViewShortenerDTO> {
-        let userId = undefined;
-        if (shortenerDTO.userId) {
-            await this.userService.findById(shortenerDTO.userId);
-            userId = shortenerDTO.userId;
-        }
+    async register(shortenerDTO: CreateShortenerDTO,req): Promise<ViewShortenerDTO> {
+        let userId = req?.user?.id||undefined;
 
         const uniqueShortenedUrl = await this.generateUniqueShortenedUrl();
         const shortenerCreateDTO = { ...shortenerDTO, userId: userId, shortenedUrl: uniqueShortenedUrl };
 
         const createdShortener = await this.shortenerRepository.create(shortenerCreateDTO);
 
-        const viewCreatedUser: ViewShortenerDTO = ShortenerBuilder.createViewShortener(createdShortener);
-        return viewCreatedUser;
+        const viewCreatedShortener: ViewShortenerDTO = ShortenerBuilder.createViewShortener(createdShortener);
+        return viewCreatedShortener;
     }
 
 

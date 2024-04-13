@@ -4,18 +4,30 @@ import { Request, Response } from 'express';
 import { CreateShortenerDTO } from './dtos/request/create-shortener.dto';
 import { AuthGuard } from 'src/user/guards/auth.guard';
 import { UpdateShortenerDTO } from './dtos/request/update-shortener.dto';
+import { AuthVerifyHeaderGuard } from 'src/user/guards/AuthVerifyHeader.Guard';
 
 @Controller('shortener')
 export class ShortenerController {
     constructor(private shortenerService: ShortenerService) { }
 
+    // @UseGuards(VerifyHeaderGuard, AuthGuard)
+    // @Post('register')
+    // async register(@Body() shortenerDTO: CreateShortenerDTO, @Res() res: Response, @Req() req: Request) {
+    //     console.log(req)
+    //     console.log("ae")
+    //     const user = await this.shortenerService.register(shortenerDTO);
+    //     return res
+    //         .status(HttpStatus.CREATED)
+    //         .json({ data: user, status: HttpStatus.CREATED });
+    // }
+
+    @UseGuards(AuthVerifyHeaderGuard)
     @Post('register')
     async register(@Body() shortenerDTO: CreateShortenerDTO, @Res() res: Response, @Req() req: Request) {
-        
-        const user = await this.shortenerService.register(shortenerDTO);
+        const shortener = await this.shortenerService.register(shortenerDTO,req);
         return res
             .status(HttpStatus.CREATED)
-            .json({ data: user, status: HttpStatus.CREATED });
+            .json({ data: shortener, status: HttpStatus.CREATED });
     }
 
     @UseGuards(AuthGuard)
