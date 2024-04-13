@@ -13,14 +13,14 @@ export class ShortenerService {
 
     async register(shortenerDTO: CreateShortenerDTO): Promise<ViewShortenerDTO> {
         let userId = undefined;
-        if(shortenerDTO.userId){
+        if (shortenerDTO.userId) {
             await this.userService.findById(shortenerDTO.userId);
             userId = shortenerDTO.userId;
         }
 
         const uniqueShortenedUrl = await this.generateUniqueShortenedUrl();
-        const shortenerCreateDTO = { ...shortenerDTO, userId:userId, shortenedUrl:uniqueShortenedUrl };
-        
+        const shortenerCreateDTO = { ...shortenerDTO, userId: userId, shortenedUrl: uniqueShortenedUrl };
+
         const createdShortener = await this.shortenerRepository.create(shortenerCreateDTO);
 
         const viewCreatedUser: ViewShortenerDTO = ShortenerBuilder.createViewShortener(createdShortener);
@@ -28,18 +28,18 @@ export class ShortenerService {
     }
 
 
-    async updateOriginalUrl(id:number ,shortenedUpdate: UpdateShortenerDTO): Promise<ViewShortenerDTO> {
+    async updateOriginalUrl(id: number, shortenedUpdate: UpdateShortenerDTO, req): Promise<ViewShortenerDTO> {
+        const userId = req.user.id
+        const shortener = await this.findShortenerById(id);
+        await this.isShortenerOwner(shortener.id, userId);
 
-        const shortener = await this.findShortenerById(shortenedUpdate.id);
-        await this.isShortenerOwner(shortener.id,shortenedUpdate.id);
-
-        const updatedShortener = await this.shortenerRepository.updateOriginalUrl(shortenedUpdate);
+        const updatedShortener = await this.shortenerRepository.updateOriginalUrl(id,shortenedUpdate);
         const viewUpdatedShortener: ViewShortenerDTO = ShortenerBuilder.createViewShortener(updatedShortener);
 
         return viewUpdatedShortener;
     }
 
-    async findShortenerById(id){
+    async findShortenerById(id) {
         const shortener = await this.shortenerRepository.findById(id);
 
         if (!shortener) {
@@ -49,35 +49,35 @@ export class ShortenerService {
         return shortener;
     }
 
-    async isShortenerOwner(shortenerId,id){
-        if(shortenerId !== id){
+    async isShortenerOwner(shortenerId, id) {
+        if (shortenerId !== id) {
             throw new UnauthorizedException('Invalid credentials2');
         }
 
     }
 
-    async findByShortenedUrl(shortenedUrl){
+    async findByShortenedUrl(shortenedUrl) {
         const shortener = await this.shortenerRepository.findByShortenedUrl(shortenedUrl);
 
         return shortener;
     }
 
-    async generateUniqueShortenedUrl():Promise<string> {
+    async generateUniqueShortenedUrl(): Promise<string> {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let shortenedUrl = '';
         for (let i = 0; i < Math.ceil(Math.random() * 6); i++) {
-          shortenedUrl += characters.charAt(Math.floor(Math.random() * characters.length));
+            shortenedUrl += characters.charAt(Math.floor(Math.random() * characters.length));
         }
-    
+
         const existingShortenedUrl = await this.findByShortenedUrl(shortenedUrl);
-    
+
 
         if (existingShortenedUrl) {
-          return this.generateUniqueShortenedUrl();
+            return this.generateUniqueShortenedUrl();
         }
-    
-        return shortenedUrl;
-      }
 
-    
+        return shortenedUrl;
     }
+
+
+}

@@ -6,7 +6,7 @@ import { UpdateShortenerDTO } from '../dtos/request/update-shortener.dto';
 
 @Injectable()
 export class ShortenerRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(shortener: RegisterShortenerDTO) {
     return await this.prisma.shortenedUrl.create({
@@ -14,9 +14,9 @@ export class ShortenerRepository {
     });
   }
 
-  async updateOriginalUrl(shortener:UpdateShortenerDTO) {
+  async updateOriginalUrl(id: number, shortener: UpdateShortenerDTO) {
     return await this.prisma.shortenedUrl.update({
-      where: { id: shortener.id },
+      where: { id: id },
       data: {
         originalUrl: shortener.originalUrl,
         updatedAt: new Date(),
@@ -34,6 +34,6 @@ export class ShortenerRepository {
     return shortener;
   }
 
-  
+
 
 }
