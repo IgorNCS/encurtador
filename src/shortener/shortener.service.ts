@@ -10,7 +10,7 @@ import { Shortener } from './dtos/Shortener';
 
 @Injectable()
 export class ShortenerService {
-    constructor(private shortenerRepository: ShortenerRepository, private jwtService: JwtService, private userService: UserService) { }
+    constructor(private shortenerRepository: ShortenerRepository) { }
 
     async register(shortenerDTO: CreateShortenerDTO, req): Promise<ViewShortenerDTO> {
         let userId = req?.user?.id || undefined;
