@@ -6,6 +6,7 @@ import { ShortenerRepository } from './repositories/shortener.repository';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import { UpdateShortenerDTO } from './dtos/request/update-shortener.dto';
+import { Shortener } from './dtos/Shortener';
 
 @Injectable()
 export class ShortenerService {
@@ -33,17 +34,43 @@ export class ShortenerService {
         const shortener = await this.findShortenerById(id);
         await this.isShortenerOwner(shortener.id, userId);
 
-        const updatedShortener = await this.shortenerRepository.updateOriginalUrl(id,shortenedUpdate);
+        const updatedShortener = await this.shortenerRepository.updateOriginalUrl(id, shortenedUpdate);
         const viewUpdatedShortener: ViewShortenerDTO = ShortenerBuilder.createViewShortener(updatedShortener);
 
         return viewUpdatedShortener;
     }
 
+    async deleteShortener(id: number, req) {
+        const userId = req.user.id
+        const shortener = await this.findShortenerById(id);
+        await this.isShortenerOwner(shortener.id, userId);
+
+        await this.shortenerRepository.updateDeleteShortener(id)
+
+        return 'Shortener deleted successfully.';
+    }
+
+    async findAllUserShortener(req): Promise<ViewShortenerDTO[]> {
+        const userId = req.user.id
+        const shorteners = await this.shortenerRepository.findAllByUserId(userId);
+        const viewShorteners: ViewShortenerDTO[] = shorteners.map(shortener => ShortenerBuilder.createViewShortener(shortener));
+        return viewShorteners;
+    }
+
+
+
+
+
+
     async findShortenerById(id) {
         const shortener = await this.shortenerRepository.findById(id);
 
         if (!shortener) {
-            throw new UnauthorizedException('Invalid credentials1');
+            throw new UnauthorizedException('Shortener not found');
+        }
+
+        if (shortener.deletedAt) {
+            throw new UnauthorizedException('Shortener deleted');
         }
 
         return shortener;
@@ -51,7 +78,7 @@ export class ShortenerService {
 
     async isShortenerOwner(shortenerId, id) {
         if (shortenerId !== id) {
-            throw new UnauthorizedException('Invalid credentials2');
+            throw new UnauthorizedException('Invalid credentials');
         }
 
     }

@@ -24,6 +24,21 @@ export class ShortenerRepository {
     });
   }
 
+  async updateDeleteShortener(id: number) {
+    return await this.prisma.shortenedUrl.update({
+      where: { id: id },
+      data: {
+        deletedAt: new Date(),
+      },
+    });
+  }
+
+  
+  async findAllByUserId(userId: number): Promise<Shortener[]> {
+    const shorteners = await this.prisma.shortenedUrl.findMany({ where: { userId: userId } });
+    return shorteners;
+}
+
   async findById(id: number) {
     const shortener = await this.prisma.shortenedUrl.findFirst({ where: { id: id } });
     return shortener;

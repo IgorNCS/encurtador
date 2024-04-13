@@ -13,7 +13,7 @@ export class RegisterShortenerDTO {
   shortenedUrl: string;
 
   @ApiProperty()
-  @IsOptional() // Tornando userId opcional
+  @IsOptional()
   @IsNumber()
   userId?: number;
 }
