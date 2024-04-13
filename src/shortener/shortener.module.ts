@@ -11,7 +11,8 @@ import { UserRepository } from 'src/user/repositories/user.repository';
 @Module({
   controllers: [ShortenerController],
   providers: [ShortenerService,JwtService,ShortenerRepository,PrismaService,UserService, UserRepository],
-  imports:[UserModule]
+  imports:[UserModule],
+  exports:[ShortenerRepository]
 })
 export class ShortenerModule {}
 
