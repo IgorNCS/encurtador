@@ -16,7 +16,7 @@ export class ShortenerRepository {
 
   async updateOriginalUrl(id: number, shortener: UpdateShortenerDTO) {
     return await this.prisma.shortenedUrl.update({
-      where: { id: id },
+      where: { id: id, deletedAt: null },
       data: {
         originalUrl: shortener.newOriginalUrl,
         updatedAt: new Date(),
@@ -35,17 +35,17 @@ export class ShortenerRepository {
 
 
   async findAllByUserId(userId: number): Promise<Shortener[]> {
-    const shorteners = await this.prisma.shortenedUrl.findMany({ where: { userId: userId } });
+    const shorteners = await this.prisma.shortenedUrl.findMany({ where: { userId: userId, deletedAt: null } });
     return shorteners;
   }
 
   async findById(id: number): Promise<Shortener> {
-    const shortener = await this.prisma.shortenedUrl.findFirst({ where: { id: id } });
+    const shortener = await this.prisma.shortenedUrl.findFirst({ where: { id: id, deletedAt: null } });
     return shortener;
   }
 
   async findByShortenedUrl(shortenedUrl: string) {
-    const shortener = await this.prisma.shortenedUrl.findFirst({ where: { shortenedUrl: shortenedUrl } });
+    const shortener = await this.prisma.shortenedUrl.findFirst({ where: { shortenedUrl: shortenedUrl, deletedAt: null } });
     return shortener;
   }
 
