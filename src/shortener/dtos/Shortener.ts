@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsString, IsBoolean } from 'class-validator';
 
 export class Shortener {
     @IsNumber()
@@ -24,4 +24,7 @@ export class Shortener {
 
     @IsDate()
     deletedAt: Date;
+
+    @IsBoolean()
+    onlyAuthenticated:boolean;
 }

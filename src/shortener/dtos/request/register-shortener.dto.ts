@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsOptional, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsNumber, IsBoolean } from 'class-validator';
 
 export class RegisterShortenerDTO {
   @ApiProperty()
@@ -16,4 +16,8 @@ export class RegisterShortenerDTO {
   @IsOptional()
   @IsNumber()
   userId?: number;
+
+  @ApiProperty()
+  @IsBoolean()
+  onlyAuthenticated: boolean;
 }

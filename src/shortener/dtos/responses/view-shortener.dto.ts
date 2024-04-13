@@ -6,4 +6,5 @@ export class ViewShortenerDTO {
   clicks: number;
   createdAt: Date;
   updatedAt: Date;
+  onlyAuthenticated: boolean;
 }
