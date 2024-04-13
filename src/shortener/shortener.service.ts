@@ -117,5 +117,10 @@ export class ShortenerService {
         return url;
     }
 
+    async incrementClicks(shortenedUrl: string): Promise<void> {
+        await this.shortenerRepository.incrementClicks(shortenedUrl);
+    }
+
+
 
 }

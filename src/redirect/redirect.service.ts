@@ -7,6 +7,7 @@ export class RedirectService {
 
     async redirectToOriginalUrl(shortenedUrl: string): Promise<string> {
         const originalUrl = await this.getOriginalUrl(shortenedUrl);
+        await this.shortenerService.incrementClicks(shortenedUrl);
         return originalUrl;
     }
 

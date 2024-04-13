@@ -54,6 +54,18 @@ export class ShortenerRepository {
     return shorteners;
   }
 
+  async incrementClicks(shortenedUrl: string): Promise<void> {
+    await this.prisma.shortenedUrl.update({
+        where: { shortenedUrl: shortenedUrl },
+        data: {
+            clicks: {
+                increment: 1
+            }
+        }
+    });
+}
+
+
 
 
 }
