@@ -14,12 +14,11 @@ export class ShortenerService {
 
     async register(shortenerDTO: CreateShortenerDTO, req): Promise<ViewShortenerDTO> {
         let userId = req?.user?.id || undefined;
-        const onlyAuthenticated = shortenerDTO.onlyAuthenticated || false;
 
         const uniqueShortenedUrl = await this.generateUniqueShortenedUrl();
         const formattedUrl = await this.formatterUrl(shortenerDTO.originalUrl);
 
-        const shortenerCreateDTO = { onlyAuthenticated: onlyAuthenticated, originalUrl: formattedUrl, userId: userId, shortenedUrl: uniqueShortenedUrl };
+        const shortenerCreateDTO = { originalUrl: formattedUrl, userId: userId, shortenedUrl: uniqueShortenedUrl };
 
         const createdShortener = await this.shortenerRepository.create(shortenerCreateDTO);
 
