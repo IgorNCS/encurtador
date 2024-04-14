@@ -5,7 +5,7 @@ import { UserRepository } from "../repositories/user.repository";
 
 @Injectable()
 export class AuthVerifyHeaderGuard implements CanActivate {
-    constructor(private jwtService: JwtService, private userRepository: UserRepository) {}
+    constructor(private jwtService: JwtService, private userRepository: UserRepository) { }
 
     async canActivate(context: ExecutionContext) {
         const request = context.switchToHttp().getRequest();
@@ -13,7 +13,7 @@ export class AuthVerifyHeaderGuard implements CanActivate {
 
         if (!accessToken) {
             return true
-        }   
+        }
 
         try {
             const payload = await this.jwtService.verifyAsync(accessToken, { secret: process.env.JWT_ACCESS_TOKEN_SECRET });

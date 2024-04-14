@@ -9,7 +9,7 @@ export class RegisterGuard implements CanActivate {
 
         if (tokenAlreadyExist) {
             throw new BadRequestException("You cannot register if you are already logged in");
-        }   
+        }
         return true;
     }
 

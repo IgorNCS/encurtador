@@ -4,8 +4,8 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 export class CreateUserDTO {
   @ApiProperty(
     {
-      description:"Email",
-      example:"igor@igor.com"
+      description: "Email",
+      example: "igor@igor.com"
     }
   )
   @IsEmail()
@@ -13,18 +13,20 @@ export class CreateUserDTO {
 
   @ApiProperty(
     {
-      description:"Password",
-      example:"1234abcd"
+      description: "Password",
+      example: "1234abcd"
     }
   )
   @IsNotEmpty()
+  @IsString()
   password: string;
 
   @ApiProperty({
-    description:"Repeat password",
-    example:"1234abcd"
+    description: "Repeat password",
+    example: "1234abcd"
   })
   @IsNotEmpty()
+  @IsString()
   repeatPassword: string;
 
 }

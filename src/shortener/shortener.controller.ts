@@ -35,7 +35,6 @@ export class ShortenerController {
         }
     }
 
-
     @DeleteShortenerSwagger()
     @UseGuards(AuthGuard)
     @Put('delete/:IDShortenedUrl')
@@ -49,8 +48,6 @@ export class ShortenerController {
         }
     }
 
-
-
     @FindMyShortenerSwagger()
     @UseGuards(AuthGuard)
     @Get('findMyShortener')
@@ -62,6 +59,7 @@ export class ShortenerController {
             return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'Failed to get yours shorteners', error: error });
         }
     }
+
     @FindAllShortenerSwagger()
     @Get('findAll')
     async findAll(@Res() res: Response) {

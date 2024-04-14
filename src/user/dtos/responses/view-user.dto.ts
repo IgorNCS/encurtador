@@ -14,6 +14,5 @@ export class ViewUserDTO {
     example: "igor@igor.com"
   })
   @IsString()
-    email: string;
-  }
-  
+  email: string;
+}

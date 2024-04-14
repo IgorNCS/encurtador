@@ -3,10 +3,7 @@ import { CreateShortenerDTO } from './dtos/request/create-shortener.dto';
 import { ViewShortenerDTO } from './dtos/responses/view-shortener.dto';
 import { ShortenerBuilder } from './builder/shortener.build';
 import { ShortenerRepository } from './repositories/shortener.repository';
-import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
 import { UpdateShortenerDTO } from './dtos/request/update-shortener.dto';
-import { Shortener } from './dtos/Shortener';
 
 @Injectable()
 export class ShortenerService {

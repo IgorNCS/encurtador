@@ -33,7 +33,6 @@ export class ShortenerRepository {
     });
   }
 
-
   async findAllByUserId(userId: number): Promise<Shortener[]> {
     const shorteners = await this.prisma.shortenedUrl.findMany({ where: { userId: userId, deletedAt: null } });
     return shorteners;
@@ -56,14 +55,14 @@ export class ShortenerRepository {
 
   async incrementClicks(shortenedUrl: string): Promise<void> {
     await this.prisma.shortenedUrl.update({
-        where: { shortenedUrl: shortenedUrl },
-        data: {
-            clicks: {
-                increment: 1
-            }
+      where: { shortenedUrl: shortenedUrl },
+      data: {
+        clicks: {
+          increment: 1
         }
+      }
     });
-}
+  }
 
 
 

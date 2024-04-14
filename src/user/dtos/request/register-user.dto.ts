@@ -18,5 +18,6 @@ export class RegisterUserDTO {
     }
   )
   @IsNotEmpty()
+  @IsString()
   password: string;
 }

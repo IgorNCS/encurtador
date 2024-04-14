@@ -10,10 +10,10 @@ import { UserRepository } from 'src/user/repositories/user.repository';
 
 @Module({
   controllers: [ShortenerController],
-  providers: [ShortenerService,JwtService,ShortenerRepository,PrismaService,UserService, UserRepository],
-  imports:[UserModule],
-  exports:[ShortenerRepository]
+  providers: [ShortenerService, JwtService, ShortenerRepository, PrismaService, UserService, UserRepository],
+  imports: [UserModule],
+  exports: [ShortenerRepository]
 })
-export class ShortenerModule {}
+export class ShortenerModule { }
 
 

@@ -21,6 +21,7 @@ export class User {
         example: "1234abcd"
     })
     @IsNotEmpty()
+    @IsString()
     password: string;
 
 }

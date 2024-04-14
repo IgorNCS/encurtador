@@ -6,7 +6,6 @@ import { ViewUserDTO } from './dtos/responses/view-user.dto';
 import { UserBuilder } from './builder/user.build';
 import { PayloadLoginDTO } from './dtos/request/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { LoginResponse } from './dtos/responses/login-response.dto';
 
 @Injectable()
 export class UserService {
@@ -17,7 +16,6 @@ export class UserService {
         await this.validatePasswordMatching(userDTO.password, userDTO.repeatPassword);
 
         const hashedPassword = await hash(userDTO.password, 10);
-
         const { email } = userDTO;
 
         const createdUser = await this.userRepository.create({
@@ -32,10 +30,9 @@ export class UserService {
 
     async login({ email, password }: PayloadLoginDTO) {
         const user = await this.findByEmail(email);
+        const passwordValid = await this.isValidPwd(password, user.password);
 
-        const pwdValid = await this.isValidPwd(password, user.password);
-
-        if (!pwdValid) {
+        if (!passwordValid) {
             throw new UnauthorizedException("Credentials Invalid");
         }
 
@@ -64,7 +61,7 @@ export class UserService {
 
         return user;
     }
-    
+
 
     private async validateUniqueEmail(email: string) {
         const existingUser = await this.userRepository.findByEmail(email);

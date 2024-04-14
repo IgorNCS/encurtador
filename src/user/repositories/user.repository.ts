@@ -5,7 +5,7 @@ import { RegisterUserDTO } from '../dtos/request/register-user.dto';
 
 @Injectable()
 export class UserRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(userDTO: RegisterUserDTO) {
     return await this.prisma.user.create({
@@ -22,7 +22,5 @@ export class UserRepository {
     const user = await this.prisma.user.findFirst({ where: { id } });
     return user;
   }
-
-  
 
 }

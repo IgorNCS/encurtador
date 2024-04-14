@@ -16,7 +16,6 @@ export function RegisterUserSwagger() {
       type: ViewUserDTO
     })(target, propertyKey, descriptor)
   };
-
 }
 
 export function LoginUserSwagger() {
@@ -33,9 +32,7 @@ export function LoginUserSwagger() {
 
     })(target, propertyKey, descriptor)
   };
-
 }
-
 
 export function LogoutUserSwagger() {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
@@ -47,22 +44,21 @@ export function LogoutUserSwagger() {
     ApiResponse({
       status: HttpStatus.OK,
       description: 'Usuario deslogado com sucesso!',
-      schema:{
+      schema: {
         properties: {
           acces_token: {
             type: 'string',
-            description:"Token de acesso do usuário",
+            description: "Token de acesso do usuário",
             example: null
           },
           status: {
             type: 'number',
-            description:"Http Status code",
+            description: "Http Status code",
             example: 200
           }
         }
       }
     })(target, propertyKey, descriptor)
   };
-
 }
 
