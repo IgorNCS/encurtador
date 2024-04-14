@@ -5,7 +5,7 @@ import { CreateShortenerDTO } from './dtos/request/create-shortener.dto';
 import { AuthGuard } from 'src/user/guards/auth.guard';
 import { UpdateShortenerDTO } from './dtos/request/update-shortener.dto';
 import { AuthVerifyHeaderGuard } from 'src/user/guards/AuthVerifyHeader.Guard';
-import { UpdateShortenerSwagger, DeleteShortenerSwagger, RegisterShortenerSwagger, FindMyShortenerSwagger, FindAllShortenerSwagger } from './swagger-shortener-data';
+import { UpdateShortenerSwagger, DeleteShortenerSwagger, RegisterShortenerSwagger, FindMyShortenerSwagger, FindAllShortenerSwagger } from './docs/swagger-shortener-data';
 
 
 @Controller('shortener')

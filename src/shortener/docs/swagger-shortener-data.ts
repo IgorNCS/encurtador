@@ -1,5 +1,5 @@
 import { ApiOperation, ApiTags, ApiResponse, getSchemaPath, ApiParam } from '@nestjs/swagger';
-import { ViewShortenerDTO } from './dtos/responses/view-shortener.dto';
+import { ViewShortenerDTO } from '../dtos/responses/view-shortener.dto';
 import { HttpStatus } from '@nestjs/common';
 
 export function RegisterShortenerSwagger() {
@@ -90,8 +90,7 @@ export function FindMyShortenerSwagger() {
     ApiResponse({
       status: HttpStatus.OK,
       description: 'Links encontrados com sucesso!',
-      type: [ViewShortenerDTO],
-      
+      type: [ViewShortenerDTO]
     })(target, propertyKey, descriptor);
   };
 }
@@ -106,7 +105,7 @@ export function FindAllShortenerSwagger() {
     ApiResponse({
       status: HttpStatus.OK,
       description: 'Links encontrados com sucesso!',
-      type: ViewShortenerDTO
+      type: [ViewShortenerDTO]
     })(target, propertyKey, descriptor);
   };
 }
