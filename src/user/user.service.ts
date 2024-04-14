@@ -30,7 +30,7 @@ export class UserService {
 
     async login({ email, password }: PayloadLoginDTO) {
         const user = await this.findByEmail(email);
-        const passwordValid = await this.isValidPwd(password, user.password);
+        const passwordValid = await this.isValidPassword(password, user.password);
 
         if (!passwordValid) {
             throw new UnauthorizedException("Credentials Invalid");
@@ -77,8 +77,8 @@ export class UserService {
         }
     }
 
-    async isValidPwd(pwd: string, hash: string): Promise<boolean> {
-        return await compare(pwd, hash);
+    async isValidPassword(password: string, hash: string): Promise<boolean> {
+        return await compare(password, hash);
     }
 
 

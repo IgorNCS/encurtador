@@ -1,13 +1,17 @@
-FROM node:20.12.2
+FROM node:latest
 
 WORKDIR /app
 
 COPY package*.json ./
 
+COPY prisma ./prisma/
+
+COPY .env ./
+
 COPY . .
 
 RUN npm install
 
-EXPOSE 3000
+EXPOSE ${PORT}
 
-RUN npm run start:dev
+

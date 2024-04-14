@@ -20,7 +20,6 @@ export class RedirectController {
     @Redirect('', 301)
     async redirectToOriginalUrl(@Param('shortenedUrl') shortenedUrl: string,@Res() res: Response) {
         const originalUrl = await this.redirectService.redirectToOriginalUrl(shortenedUrl);
-        console.log(originalUrl)
         res.setHeader('Cache-Control', 'no-store');
         return { url: `${originalUrl}` };
     }
