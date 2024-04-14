@@ -63,5 +63,5 @@
 ## Parando o Projeto:
 
 1. ```shell
-    docker-compose -f docker-compose-dev.yml down
+    docker-compose down
    ```
