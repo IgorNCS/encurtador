@@ -5,7 +5,7 @@ export class PayloadLoginDTO {
     @ApiProperty(
         {
           description:"Email",
-          example:"user@user.com"
+          example:"igor@igor.com"
         }
       )
     @IsEmail()

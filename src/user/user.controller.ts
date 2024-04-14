@@ -6,16 +6,13 @@ import { PayloadLoginDTO } from './dtos/request/login-user.dto';
 import { RegisterGuard } from './guards/register.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { LoginUserSwagger, RegisterUserSwagger, LogoutUserSwagger } from './docs/swagger-user-data';
 
 @Controller('user')
 export class UserController {
-  constructor( private userService:UserService){}
-  
-  @ApiOperation({
-    summary:'Register User.',
-    description:'Post to register User.'
-})
-  @ApiTags('User')
+  constructor(private userService: UserService) { }
+
+  @RegisterUserSwagger()
   @UseGuards(RegisterGuard)
   @Post('register')
   async register(@Body() userDTO: CreateUserDTO, @Res() res: Response) {
@@ -25,11 +22,7 @@ export class UserController {
       .json({ data: user, status: HttpStatus.CREATED });
   }
 
-  @ApiOperation({
-    summary:'Login User',
-    description:'Post to login User.'
-})
-  @ApiTags('User')
+  @LoginUserSwagger()
   @Post('login')
   @UsePipes(ValidationPipe)
   async login(@Body() payload: PayloadLoginDTO, @Req() req: Request, @Res() res: Response) {
@@ -38,17 +31,13 @@ export class UserController {
     return res.cookie('access_token', data.token).status(HttpStatus.OK).json({ access_token: data.token, status: HttpStatus.OK });
   }
 
-  @ApiOperation({
-    summary:'Logout User.',
-    description:'Post to logout User. Remove '
-})
-  @ApiTags('User')
+  @LogoutUserSwagger()
   @UseGuards(AuthGuard)
   @Post('logout')
   async logout(@Res() res: Response) {
     return res.clearCookie('access_token').status(HttpStatus.OK).json({ access_token: null, status: HttpStatus.OK });
   }
-  
-  
+
+
 
 }

@@ -5,7 +5,7 @@ export class CreateUserDTO {
   @ApiProperty(
     {
       description:"Email",
-      example:"user@user.com"
+      example:"igor@igor.com"
     }
   )
   @IsEmail()

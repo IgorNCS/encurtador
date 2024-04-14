@@ -6,6 +6,7 @@ import { ViewUserDTO } from './dtos/responses/view-user.dto';
 import { UserBuilder } from './builder/user.build';
 import { PayloadLoginDTO } from './dtos/request/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { LoginResponse } from './dtos/responses/login-response.dto';
 
 @Injectable()
 export class UserService {
@@ -44,8 +45,6 @@ export class UserService {
         return { payload, token };
     }
 
-
-
     async findByEmail(email: string) {
         const user = await this.userRepository.findByEmail(email);
 
@@ -65,9 +64,6 @@ export class UserService {
 
         return user;
     }
-
-
-
     
 
     private async validateUniqueEmail(email: string) {
